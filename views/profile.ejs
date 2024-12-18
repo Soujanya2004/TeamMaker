@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #333;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1em;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    header a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    main {
+      margin: 2em auto;
+      max-width: 800px;
+      background-color: white;
+      padding: 2em;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-bottom: 1em;
+      font-size: 1.1em;
+    }
+
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    form {
+      display: grid;
+      grid-gap: 1.5em;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, textarea {
+      padding: 0.8em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      width: 100%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.8em 1.5em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      main {
+        width: 90%;
+        padding: 1.5em;
+      }
+
+      header {
+        font-size: 1em;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Your Profile, <%= user.name %></h1>
+    <a href="/logout">Logout</a>
+  </header>
+
+  <main>
+    <section>
+      <h2>Profile Information</h2>
+      <ul>
+        <li><strong>Username:</strong> <%= user.username %></li>
+        <li><strong>Name:</strong> <%= user.name %></li>
+        <li><strong>Age:</strong> <%= user.age %></li>
+        <li><strong>Year:</strong> <%= user.year %></li>
+        <li><strong>Course:</strong> <%= user.course %></li>
+        <li><strong>LinkedIn:</strong> <a href="<%= user.linkedin %>" target="_blank">View Profile</a></li>
+        <li><strong>GitHub:</strong> <a href="<%= user.github %>" target="_blank">View Profile</a></li>
+        <li><strong>Experience:</strong> <%= user.experience %></li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Update Profile</h3>
+      <form action="/update-profile" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<%= user.name %>" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" value="<%= user.age %>" required>
+
+        <label for="course">Course:</label>
+        <input type="text" id="course" name="course" value="<%= user.course %>" required>
+
+        <label for="linkedin">LinkedIn:</label>
+        <input type="url" id="linkedin" name="linkedin" value="<%= user.linkedin %>" required>
+
+        <label for="github">GitHub:</label>
+        <input type="url" id="github" name="github" value="<%= user.github %>" required>
+
+        <label for="experience">Experience:</label>
+        <textarea id="experience" name="experience" required><%= user.experience %></textarea>
+
+        <button type="submit">Update Profile</button>
+      </form>
+    </section>
+
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Requests - Hackathon Portal</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+      padding: 1em;
+      text-align: center;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      font-size: 1.1em;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    /* Requests List Styles */
+    .requests-list {
+      padding: 2em;
+      background-color: white;
+      margin: 2em auto;
+      max-width: 800px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .requests-list h2 {
+      margin-bottom: 1.5em;
+      font-size: 2em;
+      color: #333;
+    }
+
+    /* Request Item Styles */
+    .request-item {
+      padding: 1.5em;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 1.5em;
+      background-color: #fafafa;
+      border-radius: 5px;
+    }
+
+    .request-item:last-child {
+      border-bottom: none;
+    }
+
+    .request-item p {
+      margin: 0.5em 0;
+      font-size: 1.1em;
+    }
+
+    .request-item a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .request-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* Accept Button Styles */
+    .accept-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .accept-button:hover {
+      background-color: #45a049;
+    }
+
+    .accepted-button {
+      background-color: #888;
+      color: white;
+      cursor: not-allowed;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .requests-list {
+        padding: 1em;
+        width: 90%;
+      }
+
+      .navbar a {
+        padding: 10px;
+        font-size: 1em;
+      }
+
+      .request-item p {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <% if (user) { %>
+      <a href="/yourteam">Your Team</a>
+      <a href="/profile">My Profile</a>
+      <a href="/addpost">Add Post</a>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/signup">Sign Up</a>
+    <% } %>
+  </div>
+
+  <!-- User's Requests List -->
+  <div class="requests-list">
+    <h2>Requests for My Posts</h2>
+
+    <% if (posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <div class="request-item">
+          <p><strong><%= post.title %></strong></p>
+          <p><small>Posted by: <%= post.createdBy.name %></small></p>
+          <p><small>People who have requested to join:</small></p>
+
+          <!-- Loop through each user who requested to join -->
+          <% post.requests.forEach(requester => { %>
+            <% if (requester._id != user._id) { %>
+              <div>
+                <p><%= requester.name %> requested to join.</p>
+                <form action="/accept-request/<%= post._id %>/<%= requester._id %>" method="POST">
+                  <button type="submit" class="accept-button">Accept</button>
+                </form>
+              </div>
+            <% } %>
+          <% }) %>
+
+          <p><a href="/post/<%= post._id %>">View Post</a></p>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p>You have no requests yet.</p>
+    <% } %>
+  </div>
+</body>
+</html>

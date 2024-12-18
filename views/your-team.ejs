@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Team</title>
+</head>
+<body>
+  <h1>Your Requested Posts</h1>
+
+  <% if (posts.length > 0) { %>
+    <ul>
+      <% posts.forEach(post => { %>
+        <li>
+          <h3><%= post.title %></h3>
+          <p><%= post.description %></p>
+          <p>Required People: <%= post.requiredPeople %></p>
+          <p>Requested by: <%= post.createdBy.name %></p>
+          <a href="/post/<%= post._id %>">View Details</a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>You haven't requested to join any posts yet.</p>
+  <% } %>
+  
+</body>
+</html>

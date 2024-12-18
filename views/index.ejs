@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Hackathon Portal</title>
+  <style>
+     body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 2em;
+      color: #333;
+    }
+
+    /* Navbar Styling */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+      padding: 1em;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar a {
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .navbar a.active {
+      background-color: #4CAF50;
+    }
+
+    /* Flash Message Styling */
+    .flash-message {
+      padding: 12px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      margin: 20px auto;
+      border-radius: 5px;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    /* Cards Container */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 2em;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Card Styling */
+    /* Cards Container */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 20px;
+  padding: 2em;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Card Styling */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1em;
+}
+
+.card h3 {
+  margin: 0.5em 0;
+  font-size: 1.4em;
+  color: #333;
+}
+
+.card p {
+  color: #555;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.card small {
+  font-size: 0.9em;
+  color: #777;
+}
+
+.card a {
+  text-decoration: none;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+    /* Footer Styling (Optional) */
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1em;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <% if (user) { %>
+      <a href="/yourteams">Your Teams</a> <!-- Link to the "Your Teams" page -->
+      <a href="/profile">My Profile</a>
+      <a href="/addpost">Add Post</a>
+      <a href="/requests">Requests</a> <!-- Link to the "Requests" page -->
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <a href="/login">Login</a>
+      <a href="/signup">Sign Up</a>
+    <% } %>
+  </div>
+
+  <!-- Display Flash Message if Any -->
+  <% if (success_msg) { %>
+    <div class="flash-message">
+      <%= success_msg %>
+    </div>
+  <% } %>
+
+  <!-- Hackathon Posts Section -->
+  <h1>Hackathon Posts</h1>
+  <div class="card-container">
+    <% posts.forEach(post => { %>
+      <div class="card">
+        <% if (post.poster) { %>
+          <img src="<%= post.poster %>" alt="Poster for <%= post.title %>">
+        <% } %>
+        <h3><a href="/post/<%= post._id %>"><%= post.title %></a></h3> <!-- Link to detailed post view -->
+        <p><%= post.description %></p>
+        <p><small>Posted by: <%= post.createdBy.name %></small></p>
+        
+        <!-- Only show delete button if the user is the owner of the post -->
+        <% if (user && post.createdBy._id.toString() === user._id.toString()) { %>
+          <form action="/deletepost/<%= post._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+            <button type="submit">Delete Post</button>
+          </form>
+        <% } %>
+      </div>
+    <% }); %>
+  </div>
+
+  <script>
+    function deletePost(postId) {
+      fetch('/deletepost/' + postId, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          window.location.href = '/'; // Redirect after deletion
+        } else {
+          alert('Error deleting post');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</body>
+</html>

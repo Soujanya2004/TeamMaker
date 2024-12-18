@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Signup</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1em 0;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 1em;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2em auto;
+      background-color: white;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 1.1em;
+      margin-bottom: 0.5em;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"],
+    input[type="url"],
+    textarea {
+      padding: 0.8em;
+      margin-bottom: 1.2em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+      width: 100%;
+    }
+
+    textarea {
+      height: 150px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1.1em;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      main {
+        width: 90%;
+        padding: 1.5em;
+      }
+
+      header {
+        padding: 1em;
+      }
+
+      header h1 {
+        font-size: 1.8em;
+      }
+
+      label {
+        font-size: 1em;
+      }
+
+      button {
+        padding: 0.8em;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Signup</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+    </nav>
+  </header>
+  
+  <main>
+    <form action="/signup" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required />
+
+      <label for="year">Year of Study:</label>
+      <input type="text" id="year" name="year" required />
+
+      <label for="course">Course:</label>
+      <input type="text" id="course" name="course" required />
+
+      <label for="linkedin">LinkedIn Profile:</label>
+      <input type="url" id="linkedin" name="linkedin" />
+
+      <label for="github">GitHub Profile:</label>
+      <input type="url" id="github" name="github" />
+
+      <label for="experience">Experience:</label>
+      <textarea id="experience" name="experience"></textarea>
+
+      <button type="submit">Signup</button>
+    </form>
+  </main>
+</body>
+</html>
